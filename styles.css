@@ -1,0 +1,46 @@
+:root{
+  --pink:#ff8fe2;
+  --pink2:#ff4bd7;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;height:100%;background:#000;overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+body{display:grid;place-items:center}
+.phone{width:min(100vw,512px);height:min(100vh,956px);aspect-ratio:512/956;background:#05060c;overflow:hidden;position:relative;box-shadow:0 0 80px #000}
+.stage{position:absolute;inset:0;overflow:hidden;background:#03040a}
+.bg{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;opacity:0;transition:opacity 1.1s ease,transform 1.2s ease,filter 1.2s ease}
+.bg-moon{background-image:url('assets/moon.jpg')}
+.bg-flying{background-image:url('assets/flying.jpg');transform:scale(1.02)}
+.bg-heart{background-image:url('assets/heart.jpg');transform:scale(1.05)}
+.bg-letter{background-image:url('assets/letter.jpg');transform:scale(1.01)}
+.stage-moon .bg-moon,.stage-flying .bg-flying,.stage-heart .bg-heart,.stage-letter .bg-letter{opacity:1}
+.stage-flying .bg-flying{animation:flyingDrift 8s ease-in-out infinite alternate}
+.stage-heart .bg-heart{animation:heartPulse 4.5s ease-in-out infinite}
+.stage-letter .bg-letter{filter:brightness(.93);animation:letterIn 1s ease both}
+@keyframes flyingDrift{from{transform:scale(1.03) translate3d(-7px,4px,0)}to{transform:scale(1.10) translate3d(7px,-6px,0)}}
+@keyframes heartPulse{0%,100%{transform:scale(1.04)}50%{transform:scale(1.085)}}
+@keyframes letterIn{from{transform:scale(1.08);opacity:0;filter:blur(7px) brightness(.75)}to{transform:scale(1.01);opacity:1;filter:blur(0) brightness(.93)}}
+.audio,.gift{position:absolute;z-index:20;border:0;border-radius:50%;width:46px;height:46px;background:rgba(0,0,0,.30);backdrop-filter:blur(8px);color:#fff;font-size:21px;display:grid;place-items:center;box-shadow:0 5px 18px rgba(0,0,0,.35);cursor:pointer}
+.audio{top:16px;right:16px}.gift{top:16px;right:72px}
+.audio:active,.gift:active{transform:scale(.92)}
+.hold-zone{position:absolute;z-index:10;left:16%;top:25%;width:68%;height:39%;border-radius:50%;cursor:pointer}
+.hold-hint{position:absolute;z-index:12;left:0;right:0;bottom:21%;text-align:center;color:#d7c4b1;font-size:14px;letter-spacing:.06em;text-shadow:0 2px 9px #000;opacity:1;transition:opacity .4s}
+.stage:not(.stage-moon) .hold-hint{opacity:0}
+.glow-stars{position:absolute;inset:0;z-index:3;pointer-events:none;mix-blend-mode:screen}
+.star{position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;box-shadow:0 0 10px 3px rgba(255,255,255,.55);animation:twinkle var(--d) ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.6)}50%{opacity:1;transform:scale(1.4)}}
+.floating-layer{position:absolute;inset:0;z-index:8;pointer-events:none;opacity:0;transition:opacity .6s}
+.stage-flying .floating-layer{opacity:1}
+.float-item{position:absolute;color:#ff9eea;font-size:clamp(17px,4.7vw,25px);font-weight:500;text-shadow:0 0 7px #ff3fcb,0 0 18px rgba(255,70,212,.8);white-space:nowrap;filter:drop-shadow(0 0 2px rgba(255,255,255,.15));animation:fly var(--t) ease-in-out var(--delay) infinite alternate}
+.float-photo{position:absolute;width:88px;height:112px;object-fit:cover;border-radius:6px;box-shadow:0 0 20px rgba(255,180,240,.35);filter:saturate(.75) brightness(.9);animation:flyPhoto var(--t) ease-in-out var(--delay) infinite alternate}
+@keyframes fly{from{transform:translate3d(0,0,0) rotate(var(--r)) scale(.92);opacity:.45}to{transform:translate3d(var(--x),var(--y),0) rotate(calc(var(--r) * -1)) scale(1.06);opacity:1}}
+@keyframes flyPhoto{from{transform:translate3d(0,0,0) rotate(-4deg)}to{transform:translate3d(var(--x),var(--y),0) rotate(7deg)}}
+.letter-reveal{position:absolute;inset:0;z-index:15;opacity:0;pointer-events:none;overflow:hidden}
+.stage-letter .letter-reveal{opacity:1;pointer-events:auto}
+.letter-reveal::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.20);backdrop-filter:blur(1px)}
+.letter-reveal{clip-path:inset(0 0 0 0);animation:paperReveal 1.1s ease both}
+@keyframes paperReveal{from{clip-path:inset(100% 0 0 0)}to{clip-path:inset(0 0 0 0)}}
+.close-letter{position:absolute;z-index:20;right:8.5%;top:18.0%;width:48px;height:48px;border-radius:50%;border:1px solid rgba(110,85,48,.5);background:rgba(255,245,220,.92);box-shadow:0 5px 12px rgba(0,0,0,.25);font-size:28px;color:#6b4c2d;cursor:pointer}
+.toast{position:absolute;z-index:25;left:50%;bottom:26px;transform:translateX(-50%) translateY(14px);padding:8px 12px;border-radius:14px;background:rgba(0,0,0,.55);color:#fff;font-size:12px;opacity:0;pointer-events:none;transition:.3s}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.stage-letter .gift{display:none}
+@media (min-width:700px){.phone{border-radius:26px}.audio,.gift{top:14px}.hold-zone{left:17%;width:66%}}
